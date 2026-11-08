@@ -15,6 +15,7 @@ int contar(int (*)(float, float), float, float *, int);
 float* reservar_memoria(int);
 void segregar(int (*)(float, float), float, float *, int, float *);
 void mostrar_piezas(char *, float *, int);
+void liberar_memoria(float *);//la agrege para liberar la memoria utilizada
 
 //------------------------------------
 
@@ -42,6 +43,10 @@ int main (void) {
 	mostrar_piezas("rectificables", p_rectificables, n_rectificar);
 	
 	mostrar_piezas("rechazadas", p_rechazadas, n_rechazar);
+	
+	//libero la memoria dinamica de estos arreglos
+	liberar_memoria(p_rectificables);
+	liberar_memoria(p_rechazadas);
 	
 	return 0;
 }
@@ -91,7 +96,10 @@ int contar(int (*criterio)(float, float), float valor, float *p, int n){
 }
 	
 float* reservar_memoria(int n){
-	return malloc(n*sizeof(float));
+	float *p=malloc(n*sizeof(float));
+	if(p==NULL)
+		return NULL; 
+	return p;
 }
 	
 void segregar(int (*criterio)(float, float), float valor, float *p, int n, float *q){
@@ -109,4 +117,8 @@ void mostrar_piezas(char *mensaje, float *p, int n){
 	for(int a=0;a<n;a++){
 		printf("Diametro: %.2f\n",*(p+a));
 	}
+}
+
+void liberar_memoria(float *p){
+	free(p);
 }
