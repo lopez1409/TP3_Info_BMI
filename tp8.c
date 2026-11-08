@@ -97,8 +97,10 @@ int contar(int (*criterio)(float, float), float valor, float *p, int n){
 	
 float* reservar_memoria(int n){
 	float *p=malloc(n*sizeof(float));
-	if(p==NULL)
-		return NULL; 
+	if(p==NULL){
+		printf("No se pudo reservar memoria. Fin del programa.\n");
+		exit(1);
+	}
 	return p;
 }
 	
